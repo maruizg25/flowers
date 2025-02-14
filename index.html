@@ -377,54 +377,51 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            let audio = document.getElementById("background-music");
-        
-            // Intenta reproducir el audio cuando la página carga
-            let playAudio = () => {
+      document.addEventListener("DOMContentLoaded", function () {
+        let audio = document.getElementById("background-music");
+    
+        // 🔹 Asegurar que el audio sigue reproduciéndose
+        audio.volume = 0.5; // Opcional: Ajusta el volumen inicial
+    
+        let playAudio = () => {
+            if (audio.paused) {
                 audio.play().then(() => {
                     document.removeEventListener("click", playAudio);
                 }).catch(error => {
                     console.log("⚠️ Bloqueo por el navegador. Se intentará en la primera interacción.");
                 });
-            };
-        
-            // Prueba reproducir inmediatamente
-            playAudio();
-        
-            // Si falla, espera a la primera interacción del usuario
-            document.addEventListener("click", playAudio);
-        });
-        
-      document
-        .getElementById("start-button")
-        .addEventListener("click", function () {
-          
-          let introScreen = document.getElementById("intro-screen");
-          let flowersScreen = document.getElementById("flowers-screen");
-          let message = document.getElementById("message");
-
-          // Ocultar intro-screen con animación
-          introScreen.style.opacity = "0";
-          setTimeout(() => {
+            }
+        };
+    
+        // 🔹 Intenta reproducir inmediatamente
+        playAudio();
+    
+        // 🔹 Si falla, espera a la primera interacción del usuario
+        document.addEventListener("click", playAudio);
+    });
+    
+    document.getElementById("start-button").addEventListener("click", function () {
+        let introScreen = document.getElementById("intro-screen");
+        let flowersScreen = document.getElementById("flowers-screen");
+        let message = document.getElementById("message");
+    
+        // 🔹 Ocultar intro-screen con animación
+        introScreen.style.opacity = "0";
+        setTimeout(() => {
             introScreen.style.visibility = "hidden"; // Evita bloqueos de eventos
-
-            // Mostrar flowers-screen con animación
+    
+            // 🔹 Mostrar flowers-screen con animación
             flowersScreen.style.visibility = "visible";
             flowersScreen.style.opacity = "1";
-
-            // Reiniciar animaciones forzando la recarga de las flores
-            let flowers = document.querySelector(".flowers");
-            let newFlowers = flowers.cloneNode(true);
-            flowers.parentNode.replaceChild(newFlowers, flowers);
-
+    
             // 🕐 Mostrar el mensaje después de 4 segundos (cuando florecen)
             setTimeout(() => {
               message.style.visibility = "visible";
               message.style.opacity = "1";
-            }, 4000);
-          }, 1000);
-        });
+          }, 2000);
+        }, 1000);
+    });
+    
     </script>
   </body>
 </html>
