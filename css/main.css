@@ -1968,12 +1968,12 @@ body {
 }
 
 /* 📱 Configuración específica para móviles */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 768px) {
   .message {
-    top: 8vh; /* 📌 Mensaje arriba en móviles */
-    font-size: 16px;
-    padding: 10px 18px;
-    max-width: 85%;
+    top: 12vh; /* 🔹 Lo bajamos un poco más para que no quede tan pegado */
+    font-size: 18px;
+    padding: 12px 20px;
+    max-width: 80%;
   }
 }
 
