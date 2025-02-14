@@ -380,48 +380,49 @@
       document.addEventListener("DOMContentLoaded", function () {
         let audio = document.getElementById("background-music");
     
-        // 🔹 Asegurar que el audio sigue reproduciéndose
-        audio.volume = 0.5; // Opcional: Ajusta el volumen inicial
-    
-        let playAudio = () => {
+        // Verifica si el audio ya está reproduciéndose
+        function playAudio() {
             if (audio.paused) {
-                audio.play().then(() => {
-                    document.removeEventListener("click", playAudio);
-                }).catch(error => {
+                audio.play().catch(error => {
                     console.log("⚠️ Bloqueo por el navegador. Se intentará en la primera interacción.");
                 });
             }
-        };
+        }
     
-        // 🔹 Intenta reproducir inmediatamente
+        // Intentar reproducir al cargar
         playAudio();
     
-        // 🔹 Si falla, espera a la primera interacción del usuario
+        // Si falla, espera interacción del usuario
         document.addEventListener("click", playAudio);
-    });
     
-    document.getElementById("start-button").addEventListener("click", function () {
-        let introScreen = document.getElementById("intro-screen");
-        let flowersScreen = document.getElementById("flowers-screen");
-        let message = document.getElementById("message");
+        document.getElementById("start-button").addEventListener("click", function () {
+            let introScreen = document.getElementById("intro-screen");
+            let flowersScreen = document.getElementById("flowers-screen");
+            let message = document.getElementById("message");
     
-        // 🔹 Ocultar intro-screen con animación
-        introScreen.style.opacity = "0";
-        setTimeout(() => {
-            introScreen.style.visibility = "hidden"; // Evita bloqueos de eventos
-    
-            // 🔹 Mostrar flowers-screen con animación
-            flowersScreen.style.visibility = "visible";
-            flowersScreen.style.opacity = "1";
-    
-            // 🕐 Mostrar el mensaje después de 4 segundos (cuando florecen)
+            // Evita detener el audio aquí
             setTimeout(() => {
-              message.style.visibility = "visible";
-              message.style.opacity = "1";
-          }, 2000);
-        }, 1000);
-    });
+                flowersScreen.style.visibility = "visible";
+                flowersScreen.style.opacity = "1";
     
+                // Mostrar mensaje más rápido (ahora en 2s en lugar de 4s)
+                setTimeout(() => {
+                    message.style.visibility = "visible";
+                    message.style.opacity = "1";
+    
+                    // Asegurar que el audio sigue activo
+                    playAudio();
+                }, 2000);
+            }, 1000);
+    
+            // Ocultar intro-screen con animación
+            introScreen.style.opacity = "0";
+            setTimeout(() => {
+                introScreen.style.visibility = "hidden";
+            }, 1000);
+        });
+    });
+        
     </script>
   </body>
 </html>
